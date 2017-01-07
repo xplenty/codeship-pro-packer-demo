@@ -1,4 +1,4 @@
-codeship_jet_packer_demo:
+codeship_pro_packer_demo:
   add_docker: true
   build:
     image: codeship-pro-packer-demo/packer
