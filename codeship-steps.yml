@@ -1,0 +1,3 @@
+- service: codeship_pro_packer_demo
+  name: Build codeship pro packer demo
+  command: packer build -machine-readable codeship-pro-packer-demo.json

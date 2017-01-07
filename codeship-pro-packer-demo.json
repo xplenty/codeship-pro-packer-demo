@@ -1,0 +1,39 @@
+{
+  "variables": {
+    "dockerhub_username": "{{env `DOCKERHUB_USERNAME`}}",
+    "dockerhub_password": "{{env `DOCKERHUB_PASSWORD`}}",
+    "dockerhub_email": "{{env `DOCKERHUB_EMAIL`}}",
+    "dockerhub_push_repository": "{{env `DOCKERHUB_PUSH_REPOSITORY`}}"
+  },
+  "builders": [
+    {
+      "type": "docker",
+      "image": "bahchis/stack-leader:latest",
+      "export_path": "/tmp/bahchis_stack_leader.tar",
+      "ssh_pty": true
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "func.sh",
+      "destination": "/stack-leader/func.sh"
+    }
+  ],
+  "post-processors": [
+    [
+      {
+          "type": "docker-import",
+          "repository": "{{user `dockerhub_push_repository`}}",
+          "tag": "{{ timestamp }}"
+      },
+      {
+          "type": "docker-push",
+          "login": "true",
+          "login_username": "{{user `dockerhub_username`}}",
+          "login_password": "{{user `dockerhub_password`}}",
+          "login_email": "{{user `dockerhub_email`}}"
+      }
+    ]
+  ]
+}

@@ -1,0 +1,8 @@
+codeship_jet_packer_demo:
+  add_docker: true
+  build:
+    image: codeship-pro-packer-demo/packer
+    dockerfile_path: Dockerfile
+  volumes:
+    - /root/.packer.d:/root/.packer.d
+  env_file: codeship-env.decrypted
